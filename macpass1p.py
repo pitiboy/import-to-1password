@@ -2,8 +2,11 @@
 
 import os
 import logging
-import sys
+# import sys
 import re
+import datetime
+from datetime import date
+
 
 import ConfigParser
 import argparse
@@ -42,9 +45,11 @@ for section in config.sections():
 secrets = []
 
 for entry in passwords_xml.find_all('entry'):
+  # History/Entry items excluded
   if entry.find_parent('history'):
     continue
 
+  # Collect Groups for
   matches = False
   folders = []
   parentGroups = entry.find_parents('group')
@@ -56,6 +61,17 @@ for entry in passwords_xml.find_all('entry'):
 
   if matches == False:
     continue
+
+  # check if item had expired
+  expires = entry.find('expires')
+  expiryString = entry.find('expirytime')
+  now = datetime.datetime.now()
+  if expires is not None and expires.string=='True' and expiryString is not None and config.get('xml', 'expired') == 'exclude':
+    expiryDate = datetime.datetime(int(expiryString.string[0:4]), int(expiryString.string[5:7]), int(expiryString.string[8:10]))
+    if expiryDate < now:
+      logger.debug(config.get('xml', 'expired')+' expired item: '+entry.find('uuid').string+" "+expiryDate.strftime("%Y-%m-%d"))
+      continue
+
 
   secret = {}
   # collect fields
