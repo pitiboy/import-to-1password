@@ -34,11 +34,16 @@ logger.info('MacPass XML file is opened')
 passwords = []
 
 for entry in passwords_xml.find_all('entry'):
+  if entry.find_parent('history'):
+    continue
+
+
   password = {}
   # tag fields
   fields = {}
 
   for tag in entry.find_all('string'):
+    if not tag.find_parent('history'):
       fields[tag.key.string.lower()] = tag.value.string
 
   password['title'] = normalize(fields['title'])
