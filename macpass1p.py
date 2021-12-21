@@ -30,8 +30,14 @@ args = parser.parse_args()
 config = ConfigParser.SafeConfigParser()
 config.read(os.path.join('etc', 'settings.conf'))
 
+
 passwords_xml = BeautifulSoup(open(config.get('General', 'input')), 'lxml')
 logger.info('MacPass XML file is opened')
+
+logger.debug('  with the following Configuration:')
+for section in config.sections():
+  logger.debug("     "+section+":"+str(config.items(section)))
+
 
 secrets = []
 
@@ -72,8 +78,9 @@ for entry in passwords_xml.find_all('entry'):
 # Prepare output file
 env = Environment(loader=PackageLoader('__main__', 'templates'))
 template = env.get_template('passwords.tmpl')
-output = open(config.get('General', 'output')+'-'+config.get('xml', 'root')+config.get('General', 'outputExtension'), 'w')
+outputFilename = config.get('General', 'output')+'-'+config.get('xml', 'root')+config.get('General', 'outputExtension')
+output = open(outputFilename, 'w')
 output.write(template.render(passwords = secrets).encode('utf-8'))
 output.close()
 
-logger.info('1Password CSV file is written')
+logger.info('1Password CSV file is written to '+outputFilename+' having '+str(len(secrets))+' lines')
