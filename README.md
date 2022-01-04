@@ -1,8 +1,8 @@
 # KeePass/MacPass XML to 1Password CSV converter
 
-Migrate your KeePass(X)/MacPass data to 1Password 6: Export your KeePass(X)/MacPass data to XML,
+Migrate your KeePass(X)/MacPass data to 1Password #: Export your KeePass(X)/MacPass data to XML,
 use this script to convert it to a CSV, and then import the CSV into
-1Password 6.
+1Password #.
 
 ## Prerequisites
 
@@ -14,13 +14,25 @@ Install dependencies:
 
 - Export your KeePassX/MacPass passwords to `./input/passwords.xml`.
 - Run `keepass or macpass script`.
-- Open *1Password* and go to *File > Import > Comma Delimited Text (.csv)* and
-  pick `./output/passwords.csv`.
-- Enjoy!
+  - That'd export the csv as `./output/passwords.csv`
+  - I invoked `python macpass1p.py`
+- Open *1Password* (preferrably Desktop app) and go to *File > Import > IMport a CSV file*
+    - choose your input type (most probably *Login*)
+    - choose your vault
+    - pick `./output/passwords.csv`.
+
+Benefits:
+- If you had used *1 Password 7* Desktop, 
+  - all of your imported files would be associated with a custom **tag**, based on the timestamp of importing. That *tag* you can rename to anything (using Desktop app, after right click on the *tag* under *TAGS* in the *left menu*). 
+  
+    This is very useful if you import your data in chunks so you can add custom tag exclusively for that import chunk.
+- If you import Online,
+  - you can customize the import configuration, with custom field mapping (not needed for standard *Login* type as this script uses the correct format)
+  - there will be no *tag* associated
 
 ## Documentation
 
-- [1Password 6.x CSV Documentation](https://learn2.agilebits.com/1Password4/Mac/en/KB/import.html#csv--comma-separated-values)
+- [1Password CSV Documentation](https://support.1password.com/#csv--comma-separated-values)
 
 ## License
 
