@@ -30,6 +30,8 @@ Benefits:
   - you can customize the import configuration, with custom field mapping (not needed for standard *Login* type as this script uses the correct format)
   - there will be no *tag* associated
 
+**Don't forget to delete** all the files under input/output, as using passwords in *plain text*!
+
 ## Documentation
 
 - [1Password CSV Documentation](https://support.1password.com/#csv--comma-separated-values)
