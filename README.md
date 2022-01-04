@@ -22,15 +22,25 @@ Install dependencies:
     - pick `./output/passwords.csv`.
 
 Benefits:
-- If you had used *1 Password 7* Desktop, 
-  - all of your imported files would be associated with a custom **tag**, based on the timestamp of importing. That *tag* you can rename to anything (using Desktop app, after right click on the *tag* under *TAGS* in the *left menu*). 
-  
+- If you had used *1 Password 7* Desktop,
+  - all of your imported files would be associated with a custom **tag**, based on the timestamp of importing. That *tag* you can rename to anything (using Desktop app, after right click on the *tag* under *TAGS* in the *left menu*).
+
     This is very useful if you import your data in chunks so you can add custom tag exclusively for that import chunk.
 - If you import Online,
   - you can customize the import configuration, with custom field mapping (not needed for standard *Login* type as this script uses the correct format)
   - there will be no *tag* associated
 
 **Don't forget to delete** all the files under input/output, as using passwords in *plain text*!
+
+### Configuration
+
+You can customize the behavior and conditions of the script via `settings.conf` which is in standard `INI` file format.
+- under section `General` you can update `Input / ouput` folders and target file extension
+- under section `xml`
+  - `root`, items would be extracted only started from this parent, output file would be suffixed by this value as well
+  - `regexExcludeFolder` format is regex, and the actual leaf will be excluded if it has a parent matching in any branch distance
+  - `expired=/exclude|/`, which would exclude items where expiration was set, and the date is already passed
+
 
 ## Documentation
 
